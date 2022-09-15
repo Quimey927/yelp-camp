@@ -21,7 +21,7 @@ const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
 const MongoStore = require('connect-mongo');
-
+ 
 const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/yelp-camp';
 
 mongoose
@@ -76,34 +76,31 @@ const sessionConfig = {
 app.use(session(sessionConfig));
 app.use(flash());
 
-const scriptSrcUrls = ['https://stackpath.bootstrapcdn.com/', 'https://api.tiles.mapbox.com/', 'https://api.mapbox.com/', 'https://kit.fontawesome.com/', 'https://cdnjs.cloudflare.com/', 'https://cdn.jsdelivr.net/', 'https://res.cloudinary.com/YOUR_CLOUDINARY_ACCOUNT/'];
-const styleSrcUrls = ['https://kit-free.fontawesome.com/', 'https://stackpath.bootstrapcdn.com/', 'https://api.mapbox.com/', 'https://api.tiles.mapbox.com/', 'https://fonts.googleapis.com/', 'https://use.fontawesome.com/', 'https://cdn.jsdelivr.net/', 'https://res.cloudinary.com/YOUR_CLOUDINARY_ACCOUNT/'];
-const connectSrcUrls = ['https://*.tiles.mapbox.com', 'https://api.mapbox.com', 'https://events.mapbox.com', 'https://res.cloudinary.com/YOUR_CLOUDINARY_ACCOUNT/'];
-const fontSrcUrls = ['https://res.cloudinary.com/YOUR_CLOUDINARY_ACCOUNT/'];
+const scriptSrcUrls = ['https://stackpath.bootstrapcdn.com/', 'https://api.tiles.mapbox.com/', 'https://api.mapbox.com/', 'https://kit.fontawesome.com/', 'https://cdnjs.cloudflare.com/', 'https://cdn.jsdelivr.net/', 'https://res.cloudinary.com/dejhmgbbc/'];
+const styleSrcUrls = ['https://kit-free.fontawesome.com/', 'https://stackpath.bootstrapcdn.com/', 'https://api.mapbox.com/', 'https://api.tiles.mapbox.com/', 'https://fonts.googleapis.com/', 'https://use.fontawesome.com/', 'https://cdn.jsdelivr.net/', 'https://res.cloudinary.com/dejhmgbbc/'];
+const connectSrcUrls = ['https://*.tiles.mapbox.com', 'https://api.mapbox.com', 'https://events.mapbox.com', 'https://res.cloudinary.com/dejhmgbbc/'];
+const fontSrcUrls = ['https://res.cloudinary.com/dejhmgbbc/'];
 
 app.use(
-  helmet({
-    contentSecurityPolicy: {
-      directives: {
-        defaultSrc: [],
-        connectSrc: ["'self'", ...connectSrcUrls],
-        scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
-        styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
-        workerSrc: ["'self'", 'blob:'],
-        objectSrc: [],
-        imgSrc: [
-          "'self'",
-          'blob:',
-          'data:',
-          'https://res.cloudinary.com/dejhmgbbc/',
-          'https://images.unsplash.com/',
-        ],
-        fontSrc: ["'self'", ...fontSrcUrls],
-        mediaSrc: ['https://res.cloudinary.com/dlzez5yga/'],
-        childSrc: ['blob:'],
-      },
-    },
-    crossOriginEmbedderPolicy: false,
+  helmet.contentSecurityPolicy({
+      directives : {
+          defaultSrc : [],
+          connectSrc : [ "'self'", ...connectSrcUrls ],
+          scriptSrc  : [ "'unsafe-inline'", "'self'", ...scriptSrcUrls ],
+          styleSrc   : [ "'self'", "'unsafe-inline'", ...styleSrcUrls ],
+          workerSrc  : [ "'self'", "blob:" ],
+          objectSrc  : [],
+          imgSrc     : [
+              "'self'",
+              "blob:",
+              "data:",
+              "https://res.cloudinary.com/dejhmgbbc/",
+              "https://images.unsplash.com/"
+          ],
+          fontSrc    : [ "'self'", ...fontSrcUrls ],
+          mediaSrc   : [ "https://res.cloudinary.com/dejhmgbbc/" ],
+          childSrc   : [ "blob:" ]
+      }
   })
 );
 
