@@ -58,8 +58,18 @@ module.exports.renderEditForm = async (req, res) => {
 module.exports.updateCampground = async (req, res) => {
   const { id } = req.params;
   const campground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+
   const images = req.files.map((file) => ({ url: file.path, filename: file.filename }));
   campground.images.push(...images);
+
+  const geoData = await geocoder
+    .forwardGeocode({
+      query: req.body.campground.location,
+      limit: 1,
+    })
+    .send();
+  campground.geometry = geoData.body.features[0].geometry;
+  
   await campground.save();
   if (req.body.deleteImages) {
     for (let filename of req.body.deleteImages) {
