@@ -45,6 +45,8 @@ app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(mongoSanitize());
 
+app.locals.moment = require('moment');
+
 const secret = process.env.SECRET || 'thisshouldbeabettersecret';
 
 const store = MongoStore.create({
